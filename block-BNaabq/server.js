@@ -3,14 +3,14 @@ var app = express();
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 
-app.use(cookieParser());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 
-app.use((req, res, next) => {
-  console.log(res.cookie);
+app.use('/user', (req, res, next) => {
   res.cookie('username', 'bitopan');
+  res.end('Welcome to user page');
   next();
 });
 
