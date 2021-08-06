@@ -11,7 +11,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', (req, res) => {
-  console.log(req.method, req.url);
   res.sendFile(__dirname + '/index.html');
 });
 
