@@ -17,7 +17,7 @@ app.use((req, res) => {
 });
 
 app.use((err, req, res, next) => {
-  res.send(err);
+  res.status(500).send(err);
 });
 app.listen(4000, () => {
   console.log('Listening to port 4k');
