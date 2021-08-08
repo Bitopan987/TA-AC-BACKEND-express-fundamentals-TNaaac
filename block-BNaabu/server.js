@@ -4,10 +4,6 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('/', (req, res) => {
-  res.send('Welcome');
-});
-
 app.use('/admin', (req, res, next) => {
   next('Page Unauthorised');
 });
