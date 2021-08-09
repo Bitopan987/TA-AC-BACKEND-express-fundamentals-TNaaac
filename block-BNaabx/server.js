@@ -15,6 +15,8 @@ app.use(express.static(__dirname + '/public'));
 
 //routs
 app.get('/', (req, res) => {
+  console.log(req.url);
+  //   console.log(`${req.method}/${req.url}${Date.now()}`);
   res.send('welcome');
 });
 
@@ -25,13 +27,13 @@ app.get('/', (req, res) => {
 
 //errors
 
-app.use((req, res) => {
-  res.end('Page Not Found');
-});
+// app.use((req, res) => {
+//   res.end('Page Not Found');
+// });
 
-app.use((err, req, res, next) => {
-  res.status(500).send(err);
-});
+// app.use((err, req, res, next) => {
+//   res.status(500).send(err);
+// });
 
 app.listen(4000, () => {
   console.log('Listening to port 4k');
