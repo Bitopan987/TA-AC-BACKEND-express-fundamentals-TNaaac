@@ -2,35 +2,32 @@ var express = require('express');
 var app = express();
 var logger = require('morgan');
 var cookiParser = require('cookie-parser');
-app.use(logger('dev'));
-app.use(cookiParser());
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use('/admin', (req, res, next) => {
-  next('Page Unauthorised');
-});
+app.use(express.static(__dirname + '/public'));
+app.use(logger('dev'));
+app.use(cookiParser());
 
+// app.use('/admin', (req, res, next) => {
+//   next('Page Unauthorised');
+// });
+
+//routs
 app.get('/', (req, res) => {
-  res.send('<h2>Welcome to Express</h2>');
+  res.sendFile(__dirname + '/index.html');
 });
 
-app.get('/about', (req, res) => {
-  res.cookie('name', 'tulshi');
-  res.send('My name is qwerty');
+app.get('/project', (req, res) => {
+  res.sendFile(__dirname + '/project.html');
 });
 
-app.get(`/users/:username`, (req, res) => {
-  var username = req.params.username;
-  res.send(`<h1>${username}</h1>`);
-});
+// app.get(`/users/:username`, (req, res) => {
+//   var username = req.params.username;
+//   res.send(`<h1>${username}</h1>`);
+// });
 
-app.post('/form', (req, res) => {
-  res.json(req.body);
-});
-
-app.post('/json', (req, res) => {
-  res.send(req.body);
-});
+//errors
 
 app.use((req, res) => {
   res.end('Page Not Found');
