@@ -1,40 +1,34 @@
 var express = require('express');
 var app = express();
-// var logger = require('morgan');
-// var cookiParser = require('cookie-parser');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(__dirname + '/public'));
-// app.use(logger('dev'));
-// app.use(cookiParser());
-
-// app.use('/admin', (req, res, next) => {
-//   next('Page Unauthorised');
-// });
 
 //routs
-app.get('/', (req, res) => {
-  console.log(req.url);
-  //   console.log(`${req.method}/${req.url}${Date.now()}`);
-  res.send('welcome');
+app.get('/', (req, res, next) => {
+  var current = new Date();
+  console.log(`${req.method}${req.url}${current}`);
+  res.send('Same as Morgan');
+  next();
 });
 
-// app.get(`/users/:username`, (req, res) => {
-//   var username = req.params.username;
-//   res.send(`<h1>${username}</h1>`);
-// });
+app.post('/json', (req, res) => {
+  let store = '';
+  req.on('data', (chunk) => {
+    store += chunk;
+  });
+  setTimeout(() => {
+    console.log(req.body, 'post/json');
+    res.send(req.body);
+  }, 0);
 
-//errors
+  req.on('end', () => {
+    req.body = JSON.parse(store);
+    console.log(req.body, 'start');
+  });
+});
 
-// app.use((req, res) => {
-//   res.end('Page Not Found');
-// });
-
-// app.use((err, req, res, next) => {
-//   res.status(500).send(err);
-// });
-
-app.listen(4000, () => {
-  console.log('Listening to port 4k');
+app.listen(5000, () => {
+  console.log('Listening to port 5k');
 });
